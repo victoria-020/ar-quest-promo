@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AR Квест</title>
+
+  <!-- Mapbox -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
+  <!-- Стили -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #000;
+      color: white;
+    }
+    .screen {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      padding: 20px;
+    }
+    #splash {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      background: black;
+    }
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+    .marker {
+      background: yellow;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
+      background: #dfff00;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    #camera, #popup, #task, #found, #reward {
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #popup img, #reward img, #found img, #task-img {
+      max-width: 80%;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .click-box {
+      position: absolute;
+      border: 2px solid yellow;
+      z-index: 2;
+      cursor: pointer;
+    }
+    #task-container {
+      position: relative;
+      display: inline-block;
+    }
+    #garage-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #333;
+      color: white;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SPLASH -->
+  <div id="splash" class="screen">
+    ЗАГРУЖАЕТСЯ...
+  </div>
+
+  <!-- MAP -->
+  <div id="map-screen" class="screen">
+    <div id="map"></div>
+    <button id="garage-btn">Гараж ачивок (0)</button>
+  </div>
+
+  <!-- CAMERA -->
+  <div id="camera" class="screen">
+    <h2>Наведи камеру на здание</h2>
+    <button id="show-hint">Фото превью / Что искать?</button>
+  </div>
+
+  <!-- POPUP -->
+  <div id="popup" class="screen">
+    <h3>Как выглядит здание?</h3>
+    <img src="img/hint.jpg" alt="Подсказка" />
+    <button id="popup-continue">Понял, ищу дальше</button>
+  </div>
+
+  <!-- TASK -->
+  <div id="task" class="screen">
+    <h2>Найди предмет на фото</h2>
+    <div id="task-container">
+      <img id="task-img" src="" alt="Задание" />
+    </div>
+  </div>
+
+  <!-- FOUND -->
+  <div id="found" class="screen">
+    <h2>ПРЕДМЕТ НАЙДЕН!</h2>
+    <img id="found-img" src="" alt="Найдено" />
+    <button id="get-reward">Получить ачивку</button>
+  </div>
+
+  <!-- REWARD -->
+  <div id="reward" class="screen">
+    <h2>Поздравляем!</h2>
+    <img id="reward-img" src="" alt="Ачивка" />
+    <button id="claim-reward">Забрать награду</button>
+  </div>
+
+  <!-- Script -->
+  <script src="script.js"></script>
+</body>
+</html>
